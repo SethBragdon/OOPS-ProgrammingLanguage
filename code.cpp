@@ -18,7 +18,47 @@ class dataType {
         }
 };
 
+string getNextWord(int index, int maxIndex, string words){
+    string output = "";
+    bool readingWord = false;
+    
+    if(index > 0 && words[index - 1] == ' '){
+        readingWord = true;
+    }
+    
+    for(int i = index; i <= maxIndex; i++){
+        if(words[i] == ' ' && readingWord){
+            return output;
+        } else if (words[i] == ' '){
+            readingWord = true;
+        } else if (readingWord) {
+            output += words[i];
+        }
+    }
+    
+    return "";
+}
 
+string getNextValue(int index, int maxIndex, string words){
+    string output = "";
+    bool readingWord = false;
+    
+    if(index > 0 && words[index - 1] == '"'){
+        readingWord = true;
+    }
+    
+    for(int i = index; i <= maxIndex; i++){
+        if(words[i] == '"' && readingWord){
+            return output;
+        } else if (words[i] == '"'){
+            readingWord = true;
+        } else if (readingWord) {
+            output += words[i];
+        }
+    }
+    
+    return "";
+}
 
 int main() {
 
@@ -54,14 +94,16 @@ int main() {
         currentText += inputText[i];
         //cout << currentText + "\n";
         
-        if(inputText.substr(i, 2) == "##"){
+        if(i + 2 < inputText.size() && inputText.substr(i, 2) == "##"){
             cout << "\nvariable found";
-            
-            for(int j = i; j < inputText.size(); j++){
-                if(inputText[j] == '='){
-                    cout << "\nInitialization found";
-                    break;
-                }
+            string type = inputText.substr(i + 2, 3);
+            if(type == "STR"){
+                cout << "\nstring";
+                dataType<string> variable(getNextWord(i, inputText.size(), inputText), getNextValue(i, inputText.size(), inputText));
+                //strings.push(variable);
+                
+                cout << "\n" << variable.name;
+                cout << "\n" << variable.get();
             }
         }
         
