@@ -1,5 +1,6 @@
 // C++ program to illustrate how to read data
 // from a text file
+#include <iostream>
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -27,7 +28,7 @@ string getNextWord(int index, int maxIndex, string words){
     }
     
     for(int i = index; i <= maxIndex; i++){
-        if(words[i] == ' ' && readingWord){
+        if((words[i] == ' ' || words[i] == '=') && readingWord){
             return output;
         } else if (words[i] == ' '){
             readingWord = true;
@@ -58,6 +59,14 @@ string getNextValue(int index, int maxIndex, string words){
     }
     
     return "";
+}
+
+void updateStringsArray(string newValue, string oldStrings[]) {
+    int size = sizeof(oldStrings) + 1;
+    string newArray[size] = {};
+    for(int i = 0; i < sizeof(newArray); i++){
+        
+    }
 }
 
 int main() {
@@ -95,15 +104,15 @@ int main() {
         //cout << currentText + "\n";
         
         if(i + 2 < inputText.size() && inputText.substr(i, 2) == "##"){
-            cout << "\nvariable found";
+            cout << "\nvariable found: ";
             string type = inputText.substr(i + 2, 3);
             if(type == "STR"){
-                cout << "\nstring";
+                cout << "string";
                 dataType<string> variable(getNextWord(i, inputText.size(), inputText), getNextValue(i, inputText.size(), inputText));
-                //strings.push(variable);
+                // strings[size++] = variable;
                 
-                cout << "\n" << variable.name;
-                cout << "\n" << variable.get();
+                cout << "\nname: " << variable.name;
+                cout << "\nvalue: " << variable.get();
             }
         }
         
